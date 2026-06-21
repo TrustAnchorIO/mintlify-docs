@@ -1,0 +1,65 @@
+---
+title: "Install CLI"
+description: "Install the Sparkle CLI on your machine."
+---
+
+The Sparkle CLI authenticates with Sparkle, configures your AI coding tools, and runs as a hook handler so guardrails apply on every prompt and tool use.
+
+## Prerequisites
+
+Before you install, make sure you have:
+
+- **Node.js 20+** — required for the npm install
+- A **Sparkle account** — [sign up for free](https://app.thesparkle.ai)
+
+## Install
+
+Install the CLI globally with npm:
+
+```bash
+npm install -g @sparkle-security/sparkle-cli
+```
+
+## Verify installation
+
+Confirm the CLI is available:
+
+```bash
+sparkle --help
+```
+
+You should see the list of available commands.
+
+## Next steps
+
+After installation, sign in and configure your tools:
+
+<Steps>
+  <Step title="Sign in">
+    ```bash
+    sparkle login
+    ```
+
+    This opens your browser to authenticate with Sparkle and stores your session locally.
+  </Step>
+
+  <Step title="Configure your tools">
+    ```bash
+    sparkle setup
+    ```
+
+    This wires up supported IDEs with the Sparkle MCP server, hooks, and guardrail rules.
+  </Step>
+
+  <Step title="Check status">
+    ```bash
+    sparkle status
+    ```
+
+    Confirm you are logged in and see which tools are configured.
+  </Step>
+</Steps>
+
+<Card title="Using the CLI" icon="terminal" href="/cli/usage">
+  Learn the full CLI workflow.
+</Card>

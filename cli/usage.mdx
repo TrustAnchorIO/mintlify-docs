@@ -1,0 +1,104 @@
+---
+title: "Using the CLI"
+description: "Run Sparkle from the terminal."
+---
+
+Use the Sparkle CLI to sign in, configure your AI coding tools, and verify that guardrails are active in your local workflow.
+
+## Quick start
+
+<Steps>
+  <Step title="Sign in">
+    Authenticate with Sparkle via browser OAuth:
+
+    ```bash
+    sparkle login
+    ```
+
+    Your session is stored locally under `~/.sparkle/`.
+  </Step>
+
+  <Step title="Set up your tools">
+    Configure all detected AI coding tools:
+
+    ```bash
+    sparkle setup
+    ```
+
+    `sparkle setup` auto-detects installed tools and wires each one with the Sparkle MCP server, IDE hooks, and guardrail rules.
+  </Step>
+
+  <Step title="Verify status">
+    Check your login and setup state:
+
+    ```bash
+    sparkle status
+    ```
+
+    This shows whether you are logged in and which tools are configured.
+  </Step>
+</Steps>
+
+## Configure a specific IDE
+
+To set up one tool instead of all detected tools, pass the `--ide` flag:
+
+```bash
+sparkle setup --ide cursor
+```
+
+See [Supported IDEs](#supported-ides) for all `--ide` values.
+
+## Sign out
+
+Sign out machine-wide:
+
+```bash
+sparkle logout
+```
+
+To remove Sparkle configuration for a single tool:
+
+```bash
+sparkle logout --ide cursor
+```
+
+## What setup configures
+
+When you run `sparkle setup`, the CLI:
+
+- Connects your IDE to the Sparkle MCP server
+- Installs and wires up IDE hooks
+- Registers guardrail rules for your workspace
+- Installs the `sparkle-hooks` handler, which runs silently on prompts, MCP calls, file edits, and session events
+
+You do not need to run `sparkle-hooks` manually — setup handles it.
+
+## Shared state
+
+The CLI stores configuration and session data under `~/.sparkle/`.
+
+## Use the extension instead
+
+You can also use the [Sparkle Guardrails extension](https://sparkle.security) for VS Code, Cursor, and Windsurf. The extension bundles this CLI and delegates setup to it.
+
+## Supported IDEs
+
+| Tool | `--ide` value |
+| --- | --- |
+| [Cursor](https://cursor.com) | `cursor` |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | `claudeCode` |
+| [Windsurf](https://windsurf.com) | `windsurf` |
+| [Codex CLI](https://github.com/openai/codex) | `codex` |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Commands" icon="list" href="/cli/commands">
+    Full command reference with options.
+  </Card>
+
+  <Card title="Quickstart" icon="rocket" href="/get-started/quickstart">
+    End-to-end setup for CLI and extension workflows.
+  </Card>
+</CardGroup>
