@@ -1,0 +1,90 @@
+---
+title: "Claude Code Setup"
+description: "Configure Sparkle with Claude Code using the CLI."
+---
+
+Use the Sparkle CLI to connect Claude Code to the Sparkle MCP server, hooks, and guardrail rules.
+
+## Prerequisites
+
+Before you set up Claude Code, make sure you have:
+
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed on your machine
+- **Node.js 20+** — required for the CLI install
+- A **Sparkle account** — [sign up for free](https://app.thesparkle.ai)
+- The **Sparkle CLI** installed — see [Install CLI](/cli/install)
+
+## Set up Claude Code
+
+<Steps>
+  <Step title="Sign in">
+    Authenticate with Sparkle via browser OAuth:
+
+    ```bash
+    sparkle login
+    ```
+
+    Your session is stored locally under `~/.sparkle/`.
+  </Step>
+
+  <Step title="Configure Claude Code">
+    Wire Claude Code to Sparkle:
+
+    ```bash
+    sparkle setup --ide claudeCode
+    ```
+
+    This connects Claude Code to the Sparkle MCP server, installs IDE hooks, and registers guardrail rules for your workspace.
+  </Step>
+
+  <Step title="Verify status">
+    Confirm you are logged in and Claude Code is configured:
+
+    ```bash
+    sparkle status
+    ```
+  </Step>
+</Steps>
+
+## Verify guardrails
+
+<Steps>
+  <Step title="Open a project">
+    Open the repository you want to protect with Sparkle in Claude Code.
+  </Step>
+
+  <Step title="Run a prompt">
+    Use Claude Code in that project. Sparkle applies guardrails on every prompt and tool use.
+  </Step>
+</Steps>
+
+## What setup configures
+
+When you run `sparkle setup --ide claudeCode`, the CLI:
+
+- Connects Claude Code to the Sparkle MCP server
+- Installs and wires up IDE hooks
+- Registers guardrail rules for your workspace
+- Installs the `sparkle-hooks` handler, which runs silently on prompts, MCP calls, file edits, and session events
+
+You do not need to run `sparkle-hooks` manually — setup handles it.
+
+## Remove configuration
+
+To remove Sparkle configuration from Claude Code only:
+
+```bash
+sparkle logout --ide claudeCode
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Using the CLI" icon="terminal" href="/cli/usage">
+    Learn the full CLI workflow.
+  </Card>
+
+  <Card title="Commands" icon="list" href="/cli/commands">
+    Full command reference with options.
+  </Card>
+</CardGroup>

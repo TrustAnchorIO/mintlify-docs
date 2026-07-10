@@ -1,0 +1,61 @@
+---
+title: "Configuration"
+description: "Sparkle CLI state, extension settings, and supported tool values."
+---
+
+Reference for where Sparkle stores state and which settings you can change.
+
+## CLI state
+
+The CLI stores session and configuration data under `~/.sparkle/`:
+
+| Data | Purpose |
+| --- | --- |
+| Session | OAuth session created by `sparkle login` |
+| Tool configuration | Which IDEs and agents `sparkle setup` has wired up |
+
+`sparkle logout` clears the session machine-wide. `sparkle logout --ide <value>` removes configuration for one tool without signing out.
+
+## Extension settings
+
+Configure the extension under **Settings** → search for **Sparkle Guardrails**:
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `sparkle-guardrails.telemetryEnabled` | `true` | Upload telemetry data to Sparkle |
+| `sparkle-guardrails.debug` | `false` | Enable debug logging for troubleshooting |
+
+Enable `debug` before running **Sparkle: Diagnose** if you need logs to share with [team@sparkle.security](mailto:team@sparkle.security).
+
+## Supported `--ide` values
+
+Used with `sparkle setup --ide <value>` and `sparkle logout --ide <value>`:
+
+| Tool | Value |
+| --- | --- |
+| [Cursor](/extension/cursor) | `cursor` |
+| [Claude Code](/cli/claude-code) | `claudeCode` |
+| [Windsurf](/extension/windsurf) | `windsurf` |
+| [Codex](/cli/codex) | `codex` |
+
+## What setup writes
+
+`sparkle setup` configures each tool with:
+
+- The Sparkle MCP server connection, which exposes the `get_guardrails` tool
+- IDE hooks wired to the `sparkle-hooks` handler, which runs on prompts, MCP calls, file edits, and session events
+- Guardrail rules for your workspace
+
+You don't edit these by hand. Re-run `sparkle setup` to repair or update a tool's configuration.
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Commands" href="/cli/commands" icon="list">
+    Full CLI command reference.
+  </Card>
+
+  <Card title="Troubleshooting" href="/help/troubleshooting" icon="wrench">
+    Fix login, sync, and connection issues.
+  </Card>
+</CardGroup>

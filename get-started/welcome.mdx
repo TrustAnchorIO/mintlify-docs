@@ -1,53 +1,80 @@
 ---
 title: "Welcome to Sparkle"
-description: "Set up Sparkle to bring code-aware guardrails into your development workflow."
+description: "Sparkle is the control plane for the AI-native SDLC. It makes AI-generated code safer by giving coding agents the context of your repositories before they write code, and by verifying the result after."
 ---
 
-Sparkle helps development teams use AI coding tools with more confidence.
 
-It brings lightweight, project-aware guidance into your local workflow so developers can stay aligned with team standards while moving fast.
+Sparkle adds coding guardrails to AI-assisted development and agents so generated code follows your security, architecture, best practices and compliance expectations.
 
-## What you can do with Sparkle
+You install Sparkle once — as an IDE extension or through the CLI — and it works inside the tools your team already uses: Cursor, Windsurf, VS Code, Claude Code, and Codex.
 
-With Sparkle, you can:
 
-- Use the Sparkle extension inside supported IDEs
-- Run Sparkle from the command line
-- Connect your workspace
-- Apply project guidance during development
-- Keep your local workflow simple and repeatable
+## Why Sparkle
 
-Sparkle is designed to fit into how developers already work. You do not need to change your entire development process to get started.
+AI coding tools can generate software faster, but they do not automatically understand how your organization/team expects software to be built.
 
-## How Sparkle is typically used
+They often lack the repository context, architecture decisions, security requirements, and engineering standards that experienced developers rely on. The result is code that may work, but still introduces risk, breaks established patterns, or creates more work during review.
 
-Most teams start with one of two workflows:
+Sparkle gives AI coding tools the same organizational context and guardrails your engineering and security teams expect developers to follow.
 
-### IDE workflow
+With Sparkle, teams automatically:
 
-Use the Sparkle extension inside your editor to access Sparkle while you code.
+- Apply repository-specific security and engineering guardrails during code generation
+- Reduce repeated guidance across developers, repositories, and coding tools
+- Catch guardrail violations during pull request review
+- See how AI-assisted development is being governed across the organization
 
-This is the recommended starting point for most developers.
+Sparkle helps teams move faster with AI without giving up control over how software is designed, generated, and reviewed.
 
-### CLI workflow
 
-Use the Sparkle CLI to run Sparkle commands from your terminal.
 
-This is useful for local workflows, scripts, and repeatable project setup.
+## How Sparkle works
+
+Sparkle applies guardrails across the full lifecycle of an AI coding task:
+
+<Steps>
+  <Step title="Context before generation">
+    Sparkle builds context from your repositories, architecture, policies, and engineering standards so its guardrails reflect how your codebase is expected to work.
+  </Step>
+
+  <Step title="Guardrails during generation">
+    When an AI coding task begins, Sparkle provides repository-specific rules that guide the agent while it plans, generates, and modifies code.
+  </Step>
+
+  <Step title="Verification in pull requests">
+  Sparkle reviews code changes against the applicable guardrails during pull request checks and surfaces deviations before merge.
+</Step>
+
+  <Step title="Visibility and governance">
+    Teams can see which guardrails were applied, where risks were identified, and how AI-assisted development is being governed across repositories.
+  </Step>
+</Steps>
+
+Read [How guardrails work](/guardrails/overview) for the full picture.
+
+## Where Sparkle runs
+
+<CardGroup cols={2}>
+  <Card title="CLI" icon="terminal" href="/cli/usage">
+    Configure terminal-first agents like Claude Code and Codex, or manage Sparkle from scripts and repeatable setup.
+  </Card>
+  <Card title="IDE extension" icon="plug" href="/extension/usage">
+    Sparkle Guardrails for Cursor, Windsurf, and VS Code. Guardrails apply on every AI prompt inside your editor.
+  </Card>
+</CardGroup>
+
+Both paths connect to the same Sparkle workspace and apply the same guardrails. The extension bundles the CLI, so most developers only need one install.
 
 ## Before you begin
 
-You will need:
+You need:
 
-- Access to a Sparkle workspace
-- A supported IDE or terminal environment
-- Permission to connect your local project
-- A project repository you want to use with Sparkle
+- A Sparkle account — [sign up for free](https://app.thesparkle.ai)
+- A supported IDE or coding agent
+- A repository with a git remote (Sparkle resolves guardrails per repo)
 
-## Next step
-
-Start with the Quickstart guide to install Sparkle and run your first workflow.
+## Get started
 
 <Card title="Quickstart" icon="rocket" href="/get-started/quickstart">
-  Install Sparkle and get your first project running.
+  Install Sparkle and apply guardrails to your first AI coding task in a few minutes.
 </Card>

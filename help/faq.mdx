@@ -1,0 +1,65 @@
+---
+title: "FAQ"
+description: "Common questions about Sparkle guardrails, data handling, and tool support."
+---
+
+Answers to the questions teams ask most when evaluating or rolling out Sparkle. For issues with a specific setup, see [Troubleshooting](/help/troubleshooting).
+
+<AccordionGroup>
+  <Accordion title="Does Sparkle replace SAST?">
+    No. SAST finds vulnerabilities in code that already exists. Sparkle prevents classes of issues from being written in the first place by giving agents the rules before generation, then verifies the output against those rules.
+
+    Most teams run both: Sparkle reduces the volume of findings reaching SAST and review, and SAST remains the deep static-analysis backstop.
+  </Accordion>
+
+  <Accordion title="Does Sparkle store source code?">
+    Sparkle analyzes your repositories to generate guardrails and verify changes, but it is not a code host. Your code stays in your git provider.
+
+    For details on what is processed, what is retained, and for how long, contact [team@sparkle.security](mailto:team@sparkle.security) for the current data handling documentation.
+  </Accordion>
+
+  <Accordion title="Can Sparkle work with Cursor, Windsurf, and Claude Code?">
+    Yes. Cursor, Windsurf, and VS Code use the [Sparkle Guardrails extension](/extension/usage). Claude Code and Codex are configured through the [Sparkle CLI](/cli/usage):
+
+    ```bash
+    sparkle setup --ide claudeCode
+    ```
+
+    Any MCP-compatible agent can also use the Sparkle MCP server directly.
+  </Accordion>
+
+  <Accordion title="Are guardrails generated per repo?">
+    Yes. Sparkle generates rules from each repo's actual stack, structure, and patterns, and scopes them by git remote. A rule fetched for `acme/payments-api` never applies to code in another repo.
+
+    See [Repo guardrails](/guardrails/repo-guardrails) for how scoping works in monorepos and multi-repo workspaces.
+  </Accordion>
+
+  <Accordion title="Can security teams define organization-wide rules?">
+    Yes. Organization rules — for example, "never log tokens, credentials, or PII" — are defined once in the workspace and returned alongside repo-specific rules on every `get_guardrails` call. Developers get one merged rule set per task and don't manage the layering.
+  </Accordion>
+
+  <Accordion title="Can developers override guardrails?">
+    Guardrails are context, not a hard block: an agent follows them during generation, and Sparkle verifies the output afterward. If a developer intentionally deviates — say, a legitimate exception to a pattern — the deviation is visible in verification and the guardrails summary rather than silently ignored.
+
+    This keeps the decision with the developer while giving security teams a record of where and why rules weren't followed.
+  </Accordion>
+
+  <Accordion title="How often should guardrails be refreshed?">
+    Guardrails are fetched fresh at the start of every coding task, so day-to-day you do nothing. Regenerate a repo's guardrails when its architecture changes meaningfully — a new framework, a new service boundary, a new auth flow. Organization policy updates apply centrally on the next task.
+  </Accordion>
+
+  <Accordion title="How is this different from manually writing rules.md?">
+    A hand-written `rules.md` works until it doesn't:
+
+    - It goes stale as the codebase changes. Sparkle regenerates rules from the current code.
+    - It reflects what one author knew to write down. Sparkle covers security standards (OWASP, PCI-DSS) systematically.
+    - It's per-repo and inconsistent across a fleet. Sparkle layers organization rules onto every repo uniformly.
+    - Nothing checks whether the agent followed it. Sparkle verifies output and records which rules were applied.
+
+    If you already have a good `rules.md`, that knowledge feeds into the same system — with verification and governance on top.
+  </Accordion>
+</AccordionGroup>
+
+## Still have questions?
+
+Email [team@sparkle.security](mailto:team@sparkle.security).

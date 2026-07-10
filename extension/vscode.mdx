@@ -1,18 +1,16 @@
 ---
-title: "Windsurf Setup"
-description: "Install and configure Sparkle in Windsurf."
+title: "VS Code Setup"
+description: "Install and configure Sparkle in VS Code."
 ---
 
-Install the Sparkle Guardrails extension in Windsurf to apply security guardrails on every AI prompt.
+Install the Sparkle Guardrails extension in VS Code to apply security guardrails on every AI prompt.
 
 ## Prerequisites
 
-- [Windsurf](https://windsurf.com) installed on your machine
+- [VS Code](https://code.visualstudio.com) installed on your machine
 - A Sparkle account (sign in after installation)
 
 ## Install from the marketplace
-
-Windsurf uses the [Open VSX Registry](https://open-vsx.org) for extensions.
 
 <Steps>
   <Step title="Open the Extensions panel">
@@ -28,13 +26,9 @@ Windsurf uses the [Open VSX Registry](https://open-vsx.org) for extensions.
   </Step>
 </Steps>
 
-<Tip>
-  You can also open the extension page directly on Open VSX: [Sparkle Guardrails](https://open-vsx.org/extension/thesparkle/sparkle-guardrails).
-</Tip>
-
 ## Install from a VSIX file
 
-If the extension does not appear in the marketplace, install it manually from Open VSX.
+If the extension does not appear in the marketplace, install it manually from [Open VSX](https://open-vsx.org).
 
 <Steps>
   <Step title="Download the VSIX file">
@@ -42,19 +36,27 @@ If the extension does not appear in the marketplace, install it manually from Op
   </Step>
 
   <Step title="Install from VSIX">
-    In the Extensions panel, open the **...** menu and select **Install from VSIX...**. Choose the downloaded file.
-
-    Alternatively, open the Command Palette (**Cmd+Shift+P** or **Ctrl+Shift+P**) and run **Extensions: Install from VSIX...**.
+    Open the Command Palette (**Cmd+Shift+P** or **Ctrl+Shift+P**), run **Extensions: Install from VSIX...**, and select the downloaded file.
   </Step>
 
-  <Step title="Reload Windsurf">
+  <Step title="Reload VS Code">
     Reload the window if prompted.
   </Step>
 </Steps>
 
+<Note>
+  If a marketplace download saves without a `.vsix` extension, rename the file to end in `.vsix` before installing.
+</Note>
+
+You can also install from the terminal:
+
+```bash
+code --install-extension /path/to/thesparkle.sparkle-guardrails.vsix
+```
+
 ## Sign in
 
-After installation, open Sparkle in Windsurf and complete the sign-in flow with your Sparkle account.
+After installation, open the Sparkle sidebar in VS Code and complete the sign-in flow with your Sparkle account.
 
 ## Verify installation
 
@@ -68,7 +70,7 @@ After installation, open Sparkle in Windsurf and complete the sign-in flow with 
   </Step>
 
   <Step title="Run a prompt">
-    Use Windsurf's AI features in that project. Sparkle applies guardrails on every prompt.
+    Use your AI coding features in that project. Sparkle applies guardrails on every prompt.
   </Step>
 </Steps>
 
@@ -80,6 +82,6 @@ After installation, open Sparkle in Windsurf and complete the sign-in flow with 
   </Card>
 
   <Card title="Troubleshooting" href="/help/troubleshooting" icon="wrench">
-    Fix common installation issues.
+    Fix common installation and connection issues.
   </Card>
 </CardGroup>
