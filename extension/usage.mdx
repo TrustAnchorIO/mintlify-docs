@@ -1,10 +1,120 @@
 ---
 title: "Using the Extension"
-description: "Day-to-day workflows with the Sparkle extension."
+description: "Use Sparkle Guardrails in your IDE to apply security guardrails on every AI prompt."
 ---
 
-This page will cover common extension workflows and how to get the most out of Sparkle in your editor.
+The Sparkle Guardrails extension applies project-aware security and compliance guardrails whenever you use AI coding features in your IDE. Sparkle runs in the background and fetches relevant guardrails through the Sparkle MCP server before your agent plans or generates code.
+
+## Quick start
+
+If you have not installed the extension yet, start with the setup guide for your editor. After installation, complete these steps:
+
+<Steps>
+  <Step title="Sign in">
+    Open the Sparkle sidebar from the activity bar, or run **Sparkle: Sign In** from the Command Palette (**Cmd+Shift+P** or **Ctrl+Shift+P**).
+
+    Sign up or sign in at [app.thesparkle.ai](https://app.thesparkle.ai) when prompted. No credit card is required.
+  </Step>
+
+  <Step title="Open your project">
+    Open the repository you want Sparkle to protect. Sparkle resolves guardrails from your connected Sparkle workspace and the repository's remote.
+  </Step>
+
+  <Step title="Use AI features">
+    Use your IDE's AI chat, agent, or inline edit features as you normally would. Sparkle applies guardrails on every prompt without changing your workflow.
+  </Step>
+</Steps>
+
+<Tip>
+  The extension bundles the Sparkle CLI and runs setup automatically after sign-in. You do not need to run `sparkle setup` separately when using the extension.
+</Tip>
+
+## Sparkle sidebar
+
+Click the Sparkle icon in the activity bar to open the Sparkle sidebar. From there you can:
+
+- Sign in or sign out
+- View your connection status
+- Open the sign-in tab if authentication expires
+
+Use **Sparkle: Open Sidebar** from the Command Palette if the sidebar is not visible.
+
+## How guardrails are applied
+
+When you ask your IDE agent to write or change code, Sparkle:
+
+1. Identifies the target repository from your open workspace
+2. Calls the Sparkle MCP `get_guardrails` tool with your task and repo context
+3. Returns applicable guardrails for your organization and project
+4. Injects those guardrails into the agent context before code is generated
+
+Guardrails can cover standards such as OWASP, PCI-DSS, and custom organization policies. The agent uses them during planning and code generation so issues are caught at the source rather than in review or scanning.
 
 <Note>
-  Coming soon — we're writing this guide now.
+  Guardrails are scoped to each repository. Sparkle fetches guardrails for the repo that contains the files you are changing, not for unrelated directories in the same workspace.
 </Note>
+
+## Command Palette commands
+
+Run these from the Command Palette (**Cmd+Shift+P** or **Ctrl+Shift+P**):
+
+| Command | Description |
+| --- | --- |
+| **Sparkle: Sign In** | Start or complete the sign-in flow |
+| **Sparkle: Sign Out** | Sign out of Sparkle on this machine |
+| **Sparkle: Open Sidebar** | Open the Sparkle sidebar |
+| **Sparkle: Open Sign In Tab** | Open the sign-in page in a browser tab |
+| **Sparkle: Show MCP Status** | Check whether the Sparkle MCP server is connected |
+| **Sparkle: Diagnose** | Run diagnostics when something is not working |
+| **Sparkle: Reset All Data** | Clear local Sparkle extension data and sign out |
+
+## Verify guardrails are active
+
+After sign-in, confirm Sparkle is wired correctly:
+
+<Steps>
+  <Step title="Check MCP status">
+    Run **Sparkle: Show MCP Status** from the Command Palette. The Sparkle MCP server should show as connected.
+  </Step>
+
+  <Step title="Run a coding prompt">
+    Ask your agent to write or change code in a connected repository.
+  </Step>
+
+  <Step title="Confirm MCP is called">
+    You should see a `get_guardrails` MCP call before the agent plans or generates code.
+  </Step>
+</Steps>
+
+If MCP calls are skipped, see [Troubleshooting](/help/troubleshooting) for steps to force MCP usage or add a persistent IDE rule.
+
+## Extension settings
+
+Configure Sparkle under **Settings** → search for **Sparkle Guardrails**:
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `sparkle-guardrails.telemetryEnabled` | `true` | Upload telemetry data to Sparkle |
+| `sparkle-guardrails.debug` | `false` | Enable debug logging for troubleshooting |
+
+Enable debug logging if you run **Sparkle: Diagnose** or need to share logs with support.
+
+## Supported editors
+
+The extension is published on [Open VSX](https://open-vsx.org/extension/thesparkle/sparkle-guardrails) and works in:
+
+- [Cursor](/extension/cursor)
+- [Windsurf](/extension/windsurf)
+- [VS Code](/extension/vscode) and other Open VSX-compatible editors
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How guardrails work" href="/guardrails/overview" icon="shield">
+    Understand context, generation, and verification.
+  </Card>
+
+  <Card title="Troubleshooting" href="/help/troubleshooting" icon="wrench">
+    Fix MCP connection issues and skipped guardrail calls.
+  </Card>
+</CardGroup>

@@ -1,0 +1,90 @@
+---
+title: "How guardrails work"
+description: "How Sparkle applies context, rules, and verification around AI code generation."
+sidebarTitle: "Overview"
+---
+
+Coding guardrails are repo-specific rules that AI coding agents follow while writing code. Sparkle generates them from your codebase and policies, delivers them to your agent at the right moment, and verifies the output against them.
+
+The result: AI-generated code that follows your security, architecture, and compliance expectations by default — not after a review cycle catches the problem.
+
+## The guardrail lifecycle
+
+Every AI coding task goes through three phases with Sparkle.
+
+### 1. Context before generation
+
+Guardrails are only useful if they match your codebase. Sparkle builds context from:
+
+- **Repo structure** — frameworks, languages, module boundaries, existing patterns
+- **Security expectations** — standards like OWASP and PCI-DSS, plus your organization's policies
+- **Architecture** — how services communicate, where auth lives, which layers own what
+- **Work context** — tickets and task descriptions, when connected
+
+From this, Sparkle produces guardrails scoped to each repository. A payments service gets rules about handling card data. A frontend repo gets rules about output encoding and token storage. Neither gets rules that don't apply to it.
+
+### 2. Guardrails during generation
+
+When you give your agent a coding task, Sparkle intercepts the moment before planning:
+
+1. Sparkle identifies the target repository from your workspace and its git remote.
+2. The agent calls the Sparkle MCP `get_guardrails` tool with the task and repo context.
+3. Sparkle returns the guardrails that apply to this repo, this organization, and this task.
+4. The guardrails are injected into the agent's context before it writes any code.
+
+The agent then plans and generates code with the rules in scope. For example, if a guardrail says all database access goes through the repository layer, the agent won't write raw queries in a route handler — it follows the pattern from the start.
+
+```text
+User: Add an endpoint to update the user's email address.
+
+Agent: [calls get_guardrails → receives rules for this repo]
+       [plans with rules: input validation at the boundary,
+        auth middleware required, email changes trigger
+        re-verification per policy]
+       [generates code that follows all three]
+```
+
+### 3. Verification after generation
+
+After the agent finishes, Sparkle checks whether the generated or changed code follows the expected rules. The agent also reports which guardrails it applied in a **Sparkle Guardrails Applied** summary at the end of its response:
+
+```markdown
+**Sparkle Guardrails Applied:**
+[acme/payments-api]
+- `auth::AUTH-004`: Added session re-validation on email change
+- `input::VAL-001`: Validated email format at the API boundary
+```
+
+Deviations surface immediately, while the change is still in the developer's editor — not days later in code review or a security scan.
+
+## Visibility and governance
+
+Guardrails only work if teams can see them working. Sparkle records:
+
+- Which guardrails were fetched and applied for each task
+- Which repos are covered and which aren't
+- Where generated code deviated from expected rules
+
+Security and engineering leads use this to answer questions like "are AI-assisted changes to our payment code following PCI rules?" without instrumenting anything themselves.
+
+## Where guardrails apply
+
+| Surface | How guardrails are delivered |
+| --- | --- |
+| Cursor, Windsurf, VS Code | [Sparkle Guardrails extension](/extension/usage) — applies on every AI prompt |
+| Claude Code, Codex | [Sparkle CLI](/cli/usage) — MCP server, hooks, and rules wired by `sparkle setup` |
+| Any MCP-compatible agent | Sparkle MCP server with the `get_guardrails` tool |
+
+All surfaces pull from the same workspace, so a rule defined once applies everywhere your team codes.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Repo guardrails" href="/guardrails/repo-guardrails" icon="git-branch">
+    How rules are scoped, generated, and refreshed per repository.
+  </Card>
+
+  <Card title="Quickstart" href="/get-started/quickstart" icon="rocket">
+    Install Sparkle and see guardrails on your first task.
+  </Card>
+</CardGroup>

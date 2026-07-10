@@ -1,0 +1,90 @@
+---
+title: "Codex Setup"
+description: "Configure Sparkle with Codex using the CLI."
+---
+
+Use the Sparkle CLI to connect Codex to the Sparkle MCP server, hooks, and guardrail rules.
+
+## Prerequisites
+
+Before you set up Codex, make sure you have:
+
+- [Codex](https://chatgpt.com/codex/) installed on your machine
+- **Node.js 20+** required for the CLI install
+- A **Sparkle account**, [sign up for free](https://app.thesparkle.ai)
+- The **Sparkle CLI** installed, see [Install CLI](/cli/install)
+
+## Set up Codex
+
+<Steps>
+  <Step title="Sign in">
+    Authenticate with Sparkle via browser OAuth:
+
+    ```bash
+    sparkle login
+    ```
+
+    Your session is stored locally under `~/.sparkle/`.
+  </Step>
+
+  <Step title="Configure Codex">
+    Wire Codex to Sparkle:
+
+    ```bash
+    sparkle setup --ide codex
+    ```
+
+    This connects Codex to the Sparkle MCP server, installs IDE hooks, and registers guardrail rules for your workspace.
+  </Step>
+
+  <Step title="Verify status">
+    Confirm you are logged in and Codex is configured:
+
+    ```bash
+    sparkle status
+    ```
+  </Step>
+</Steps>
+
+## Verify guardrails
+
+<Steps>
+  <Step title="Open a project">
+    Open the repository you want to protect with Sparkle in Codex.
+  </Step>
+
+  <Step title="Run a prompt">
+    Use Codex in that project. Sparkle applies guardrails on every prompt and tool use.
+  </Step>
+</Steps>
+
+## What setup configures
+
+When you run `sparkle setup --ide codex`, the CLI:
+
+- Connects Codex to the Sparkle MCP server
+- Installs and wires up IDE hooks
+- Registers guardrail rules for your workspace
+- Installs the `sparkle-hooks` handler, which runs silently on prompts, MCP calls, file edits, and session events
+
+You do not need to run `sparkle-hooks` manually — setup handles it.
+
+## Remove configuration
+
+To remove Sparkle configuration from Codex only:
+
+```bash
+sparkle logout --ide codex
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Using the CLI" icon="terminal" href="/cli/usage">
+    Learn the full CLI workflow.
+  </Card>
+
+  <Card title="Commands" icon="list" href="/cli/commands">
+    Full command reference with options.
+  </Card>
+</CardGroup>

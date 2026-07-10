@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "willow",
+  "theme": "maple",
   "name": "Sparkle",
   "colors": {
     "primary": "#0000ff",
@@ -19,6 +19,10 @@
     {
       "source": "/quickstart",
       "destination": "/get-started/quickstart"
+    },
+    {
+      "source": "/extension/troubleshooting",
+      "destination": "/help/troubleshooting"
     }
   ],
   "navigation": {
@@ -27,6 +31,7 @@
         "group": "Get Started",
         "pages": [
           "get-started/welcome",
+          "get-started/coding-guardrails",
           "get-started/quickstart"
         ]
       },
@@ -35,23 +40,31 @@
         "pages": [
           "extension/cursor",
           "extension/windsurf",
-          "extension/usage",
-          "extension/troubleshooting"
+          "extension/vscode",
+          "extension/usage"
         ]
       },
       {
         "group": "CLI",
         "pages": [
           "cli/install",
+          "cli/claude-code",
+          "cli/codex",
           "cli/usage",
           "cli/commands"
         ]
       },
       {
+        "group": "Help",
+        "pages": [
+          "help/troubleshooting",
+          "help/faq"
+        ]
+      },
+      {
         "group": "Reference",
         "pages": [
-          "reference/configuration",
-          "reference/changelog"
+          "reference/configuration"
         ]
       }
     ]

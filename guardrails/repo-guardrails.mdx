@@ -1,0 +1,88 @@
+---
+title: "Repo guardrails"
+description: "How Sparkle scopes, generates, and layers guardrails per repository."
+---
+
+Guardrails in Sparkle are scoped to repositories. Each repo gets rules that match its stack, its risk profile, and your organization's policies — and those rules never leak into other repos.
+
+## How repos are identified
+
+Sparkle identifies a repository by its git remote. When your agent fetches guardrails, Sparkle resolves the repo owner and name from `git remote -v` in the directory being changed.
+
+```bash
+git remote -v
+# origin  git@github.com:acme/payments-api.git (fetch)
+# → guardrails resolve for acme/payments-api
+```
+
+This has two practical consequences:
+
+- **Monorepos:** all directories under one root remote share the root repo's guardrails. Multiple tasks in one monorepo correctly resolve to the same rules.
+- **Side-by-side repos:** if your workspace contains several independent repos, each gets its own guardrails. Sparkle fetches rules for the repo that contains the files being changed, not for everything open in your editor.
+
+<Warning>
+  Guardrails fetched for one repo are never applied to another. If an agent works across two repos in one task, it fetches guardrails for each separately.
+</Warning>
+
+A directory with no git remote falls back to local scoping: the directory name is used as the repo name with `local` as the owner.
+
+## How guardrails are generated
+
+Sparkle generates guardrails per repo from three inputs:
+
+1. **The codebase itself** — languages, frameworks, module structure, and existing patterns. Rules reference how your code actually works, not generic best practices.
+2. **Security standards** — OWASP, PCI-DSS, and other frameworks relevant to what the repo does.
+3. **Organization policies** — rules your security team defines that apply across repos.
+
+This is what separates generated guardrails from a hand-written `rules.md`: they stay in sync with the codebase, they cover standards your team would have to research manually, and they're consistent across every repo in the organization.
+
+## Rule layering
+
+Guardrails combine two layers:
+
+| Layer | Defined by | Example |
+| --- | --- | --- |
+| Organization rules | Security or platform team, applied across repos | "Never log tokens, credentials, or PII" |
+| Repo rules | Generated per repo from its code and stack | "All DB access in this service goes through `src/repositories/`" |
+
+Both layers are returned together when an agent calls `get_guardrails`. Developers don't manage the merge — they get one applicable rule set per task.
+
+## Anatomy of a guardrail
+
+Each guardrail has a stable identity so it can be tracked from generation through verification:
+
+- **`key`** — the rule's identifier (for example, `auth`, `input`, `secrets`)
+- **`short_code`** — the specific rule within that key (for example, `AUTH-004`)
+- **Rule text** — the instruction the agent follows
+
+Agents cite these in their end-of-task summary, which is how Sparkle and your team trace which rules governed each change:
+
+```markdown
+**Sparkle Guardrails Applied:**
+[acme/payments-api]
+- `secrets::SEC-002`: Read the API key from environment config instead of hardcoding
+```
+
+## Refreshing guardrails
+
+Guardrails are fetched fresh at the start of each coding task, so agents always use the current rule set — no manual sync step in daily work.
+
+Regenerate a repo's guardrails when the repo changes in ways the rules should reflect:
+
+- A new framework, language, or major dependency is introduced
+- Architecture changes, such as a new service boundary or auth flow
+- Your security team updates organization policies
+
+For most teams, regenerating after significant architectural changes is enough. Rules derived from organization policies update centrally and apply on the next task automatically.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="How guardrails work" href="/guardrails/overview" icon="shield">
+    The full lifecycle: context, generation, verification.
+  </Card>
+
+  <Card title="FAQ" href="/help/faq" icon="circle-help">
+    Common questions about scope, overrides, and how Sparkle compares to other tools.
+  </Card>
+</CardGroup>
