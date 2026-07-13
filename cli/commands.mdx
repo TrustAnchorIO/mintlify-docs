@@ -12,8 +12,7 @@ Reference for all Sparkle CLI commands, options, and supported IDE values.
 | `sparkle login` | Authenticate with Sparkle via browser OAuth |
 | `sparkle setup` | Configure supported AI coding tools with Sparkle |
 | `sparkle status` | Show login and setup state |
-| `sparkle logout` | Sign out or remove config for a specific tool |
-| `sparkle-hooks` | Hook handler invoked by your IDE (installed by setup) |
+| `sparkle logout` | Sign out or remove config for all IDEs/coding agents or  specific one |
 
 ## sparkle login
 
@@ -75,13 +74,9 @@ sparkle logout --ide cursor
 | --- | --- |
 | `--ide <value>` | Remove config for a specific IDE only |
 
-## sparkle-hooks
 
-Hook handler invoked by your IDE on prompts, MCP calls, file edits, and session events. Runs silently as a telemetry sidecar.
 
-You do not run this command directly. `sparkle setup` installs and wires it up for you.
-
-## Supported IDEs
+## Supported IDEs/Coding Agents
 
 | Tool | `--ide` value |
 | --- | --- |

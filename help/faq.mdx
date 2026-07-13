@@ -32,6 +32,14 @@ Answers to the questions teams ask most when evaluating or rolling out Sparkle. 
     Yes. Sparkle generates rules from each repo's actual stack, structure, and patterns, and scopes them by git remote. A rule fetched for `acme/payments-api` never applies to code in another repo.
   </Accordion>
 
+  <Accordion title="Can a developer work across multiple repos when using Sparkle?">
+    Yes. Sparkle applies guardrails at the repo level. When you change files in more than one repository, Sparkle resolves each repo from its git remote and fetches that repo's guardrails separately. Rules from one repo are never applied to another.
+  </Accordion>
+
+  <Accordion title="Does Sparkle work in a git worktree?">
+    Yes. Sparkle identifies a repository by its git remote. When you code in a worktree, Sparkle resolves the same repo and applies the same guardrails as it would from the primary working tree.
+  </Accordion>
+
   <Accordion title="Can security teams define organization-wide rules?">
     Yes. Organization rules — for example, "never log tokens, credentials, or PII" — are defined once in the workspace and returned alongside repo-specific rules on every `get_guardrails` call. Developers get one merged rule set per task and don't manage the layering.
   </Accordion>

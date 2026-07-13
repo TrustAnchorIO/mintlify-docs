@@ -31,10 +31,10 @@ Before you set up Claude Code, make sure you have:
     Wire Claude Code to Sparkle:
 
     ```bash
-    sparkle setup
+    sparkle setup --ide claudeCode
     ```
 
-    This connects Claude Code to the Sparkle MCP server, installs IDE hooks, and registers guardrail rules for your workspace.
+    This connects Claude Code to the Sparkle MCP server, configure sparkle hooks, and registers guardrail rules for your machine.
   </Step>
 
   <Step title="Verify status">
@@ -54,7 +54,7 @@ Before you set up Claude Code, make sure you have:
   </Step>
 
   <Step title="Run a prompt">
-    Use Claude Code in that project. Sparkle applies guardrails on every prompt and tool use.
+    Use Claude Code in that project. Sparkle applies guardrails on every prompt before code generation.
   </Step>
 </Steps>
 
@@ -63,11 +63,8 @@ Before you set up Claude Code, make sure you have:
 When you run `sparkle setup`, the CLI:
 
 - Connects Claude Code to the Sparkle MCP server
-- Installs and wires up IDE hooks
+- Installs and wires up hooks
 - Registers guardrail rules for your workspace
-- Installs the `sparkle-hooks` handler, which runs silently on prompts, MCP calls, file edits, and session events
-
-You do not need to run `sparkle-hooks` manually — setup handles it.
 
 ## Remove configuration
 
