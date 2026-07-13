@@ -42,23 +42,9 @@ sparkle login
 
 If your account has no workspace, ask a workspace admin to invite you, or contact [team@sparkle.security](mailto:team@sparkle.security).
 
-## Repo not detected
-
-Sparkle identifies repositories by their git remote. If guardrails come back empty or scoped to `local`:
-
-1. Confirm the repo has a remote:
-
-```bash
-git remote -v
-```
-
-2. If there's no remote, add one. Without a remote, Sparkle falls back to the directory name with `local` as the owner, and workspace-level rules for the real repo won't resolve.
-
-3. In multi-root workspaces, make sure the files being changed are inside the repo's directory. Sparkle resolves the remote from the directory containing the change, not from the workspace root.
-
 ## Guardrails not syncing
 
-Guardrails are fetched fresh on each coding task, so stale rules usually mean the fetch is failing or setup is out of date.
+Guardrails are fetched based on the prompt and if no guardrails are loading:
 
 1. Check setup state:
 
@@ -90,96 +76,13 @@ If the Sparkle sidebar shows a disconnected state or MCP calls never happen:
 
 If your agent writes code without calling the Sparkle MCP `get_guardrails` tool, force the call with one of the two options below.
 
-### Option 1: Ask the agent directly
+### Ask the agent directly
 
 Paste this into your agent chat before your coding request:
 
 ```text
 Please call Sparkle MCP get_guardrails for this task before planning or generating code.
 ```
-
-### Option 2: Add a persistent IDE rule
-
-Add a rule so your agent calls Sparkle MCP automatically on every coding task.
-
-<Tabs>
-  <Tab title="Cursor">
-    <Steps>
-      <Step title="Open Cursor settings">
-        Open **Cursor Settings** from the menu or press **Cmd+,** (Mac) or **Ctrl+,** (Windows/Linux).
-      </Step>
-
-      <Step title="Go to the Rules tab">
-        Select the **Rules** tab.
-      </Step>
-
-      <Step title="Create a new rule">
-        Click **New rule** and give it a clear name, such as **Sparkle Guardrails**.
-      </Step>
-
-      <Step title="Paste the rule text">
-        Copy the rule text below and paste it into the rule editor.
-      </Step>
-
-      <Step title="Save and restart">
-        Save the rule, then restart Cursor.
-      </Step>
-    </Steps>
-
-    ```text
-    Before writing or modifying any code, call Sparkle MCP `get_guardrails` to retrieve applicable guardrails. You must pass the determined repository name, repository owner, and the user's request or task into their respective parameters (passing the task as the `prompt` parameter). Auth uses the request JWT.
-
-    To determine repo details, you MUST follow this strict order of operations:
-    1. Identify Target Directories: Determine exactly which specific child directories will contain the code changes. If a task spans multiple directories, decompose the work into per-directory sub-tasks.
-    2. Execute Git Commands Within the Target Context: Always run `git remote -v` relative to or inside the specific target child directory. Do NOT run this from a generic or non-git parent directory.
-    3. Resolve Monorepo vs. Side-by-Side Behavior:
-       - Side-by-Side Repos: If the child directory has its own independent repository, extract the owner and repo name from its specific remote URL.
-       - Monorepos: If the child directory is part of a monorepo, standard git resolution will naturally bubble up to the root repository's remote. Use this root remote's owner and repo name. It is entirely expected and correct for multiple distinct child tasks in a monorepo to share the same root repo name and owner.
-    4. Fallback ONLY as a Last Resort: If and ONLY if running the git command inside the target directory yields no remote info or errors out (indicating a completely untracked local directory), use that specific directory's name as the repo name and `local` as the repo owner. Never apply the 'local' owner blanketly without checking the child directory first.
-
-    Guardrails returned for a repo are scoped strictly to that repo. NEVER apply guardrails fetched for one repo to code in another repo. Each repo's guardrails must only govern changes made within that repo's directory.
-
-    When to call `get_guardrails`:
-    - ONCE when the user asks you to write or change code — before you start writing.
-    - Again ONLY if the user gives a new, distinct request that changes the scope of work (e.g., "now add an API endpoint" after finishing a UI task).
-    - Do NOT call it repeatedly during planning, replanning, brainstorming, or iterating on the same task. Reuse the guardrails you already retrieved.
-
-    Then: generate a plan following the guardrails, and generate code.
-
-    After completing code generation, ALWAYS include a summary section at the very end of your response using the exact markdown structure shown inside the examples below. Do NOT include the XML tags themselves (e.g., <example>) in your final output.
-
-    **Sparkle Guardrails Applied:**
-    [repo_owner/repo_name]
-    - `key::short_code`: Brief description of how you applied it
-
-    Rules for the summary:
-    1. Use the exact `key` field and `short_code` field from each guardrail taken from the `get_guardrails` response.
-    2. Wrap the `key::short_code` in backticks. DO NOT make the key and short_code bold or italics. DO NOT OMIT THE SHORT_CODE if it exists.
-    3. Always add the [repo_owner/repo_name] in square brackets before beginning the list of guardrails for that directory. This applies even for single-repo tasks.
-    4. If a repo has no guardrails returned, or the tool fails, use `- None: [reason]` (e.g., no guardrails found, or unable to fetch). DO NOT wrap None in backticks.
-
-    This summary helps track the sparkle guardrails which were considered in code generation.
-    ```
-  </Tab>
-
-  <Tab title="VS Code">
-    <Note>
-      VS Code setup steps will be added soon. Use the Cursor rule text as a temporary fallback.
-    </Note>
-
-    Copy the rule text from the **Cursor** tab and add it to your VS Code agent rules configuration.
-  </Tab>
-
-  <Tab title="Windsurf">
-    <Note>
-      Windsurf setup steps will be added soon. Use the Cursor rule text as a temporary fallback.
-    </Note>
-
-    Copy the rule text from the **Cursor** tab and add it to your Windsurf rules configuration.
-  </Tab>
-</Tabs>
-
-After applying either option, re-run your request. You should see a `get_guardrails` MCP call before the agent plans or generates code, and a **Sparkle Guardrails Applied** summary at the end of its response.
 
 ## Contact support
 

@@ -43,12 +43,12 @@ Use **Sparkle: Open Sidebar** from the Command Palette if the sidebar is not vis
 
 When you ask your IDE agent to write or change code, Sparkle:
 
-1. Identifies the target repository from your open workspace
+1. Identifies the user intent from the prompt and target repository from your open workspace
 2. Calls the Sparkle MCP `get_guardrails` tool with your task and repo context
 3. Returns applicable guardrails for your organization and project
 4. Injects those guardrails into the agent context before code is generated
 
-Guardrails can cover standards such as OWASP, PCI-DSS, and custom organization policies. The agent uses them during planning and code generation so issues are caught at the source rather than in review or scanning.
+Guardrails cover coding best practices and security standards such as OWASP, PCI-DSS, and custom organization policies. The agent uses them during planning and code generation so issues are caught at the source rather than in review or scanning.
 
 <Note>
   Guardrails are scoped to each repository. Sparkle fetches guardrails for the repo that contains the files you are changing, not for unrelated directories in the same workspace.
@@ -106,15 +106,3 @@ The extension is published on [Open VSX](https://open-vsx.org/extension/thespark
 - [Cursor](/extension/cursor)
 - [Windsurf](/extension/windsurf)
 - [VS Code](/extension/vscode) and other Open VSX-compatible editors
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="How guardrails work" href="/guardrails/overview" icon="shield">
-    Understand context, generation, and verification.
-  </Card>
-
-  <Card title="Troubleshooting" href="/help/troubleshooting" icon="wrench">
-    Fix MCP connection issues and skipped guardrail calls.
-  </Card>
-</CardGroup>
