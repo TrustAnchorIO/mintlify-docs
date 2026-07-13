@@ -30,8 +30,6 @@ Answers to the questions teams ask most when evaluating or rolling out Sparkle. 
 
   <Accordion title="Are guardrails generated per repo?">
     Yes. Sparkle generates rules from each repo's actual stack, structure, and patterns, and scopes them by git remote. A rule fetched for `acme/payments-api` never applies to code in another repo.
-
-    See [Repo guardrails](/guardrails/repo-guardrails) for how scoping works in monorepos and multi-repo workspaces.
   </Accordion>
 
   <Accordion title="Can security teams define organization-wide rules?">
@@ -51,7 +49,7 @@ Answers to the questions teams ask most when evaluating or rolling out Sparkle. 
   <Accordion title="How is this different from manually writing rules.md?">
     A hand-written `rules.md` works until it doesn't:
 
-    - It goes stale as the codebase changes. Sparkle regenerates rules from the current code.
+    - It goes stale as the codebase changes. Sparkle keeps guardrails fresh from the current code.
     - It reflects what one author knew to write down. Sparkle covers security standards (OWASP, PCI-DSS) systematically.
     - It's per-repo and inconsistent across a fleet. Sparkle layers organization rules onto every repo uniformly.
     - Nothing checks whether the agent followed it. Sparkle verifies output and records which rules were applied.

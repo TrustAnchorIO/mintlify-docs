@@ -36,15 +36,6 @@
         ]
       },
       {
-        "group": "Extension",
-        "pages": [
-          "extension/cursor",
-          "extension/windsurf",
-          "extension/vscode",
-          "extension/usage"
-        ]
-      },
-      {
         "group": "CLI",
         "pages": [
           "cli/install",
@@ -52,6 +43,15 @@
           "cli/codex",
           "cli/usage",
           "cli/commands"
+        ]
+      },
+      {
+        "group": "Extension",
+        "pages": [
+          "extension/cursor",
+          "extension/windsurf",
+          "extension/vscode",
+          "extension/usage"
         ]
       },
       {

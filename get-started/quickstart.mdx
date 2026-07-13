@@ -10,16 +10,20 @@ Get Sparkle running in your IDE or terminal and confirm guardrails are active. T
 Pick the tool you code with:
 
 <CardGroup cols={3}>
-  <Card title="Cursor" icon="mouse-pointer-2" href="/extension/cursor">
-    Install the Sparkle Guardrails extension in Cursor.
+  <Card title="Cursor" icon="mouse-pointer" href="/extension/cursor">
+    Install Sparkle Guardrails extension in Cursor.
   </Card>
 
   <Card title="Windsurf" icon="wind" href="/extension/windsurf">
-    Install the Sparkle Guardrails extension in Windsurf.
+    Install Sparkle Guardrails extension in Windsurf.
   </Card>
 
   <Card title="VS Code" icon="code" href="/extension/vscode">
     Install the Sparkle Guardrails extension in VS Code.
+  </Card>
+
+  <Card title="CLI only" icon="download" href="/cli/install">
+    Install the CLI and configure all detected tools.
   </Card>
 
   <Card title="Claude Code" icon="terminal" href="/cli/claude-code">
@@ -29,14 +33,10 @@ Pick the tool you code with:
   <Card title="Codex" icon="terminal" href="/cli/codex">
     Configure Codex with the Sparkle CLI.
   </Card>
-
-  <Card title="CLI only" icon="download" href="/cli/install">
-    Install the CLI and configure all detected tools.
-  </Card>
 </CardGroup>
 
 <Tip>
-  The IDE extension bundles the CLI and runs setup automatically after sign-in. If you use the extension, you can skip the CLI steps below.
+  The CLI install takes care of setting up IDE extension automatically after sign-in. If you use the CLI, you can skip the IDE eextension steps below.
 </Tip>
 
 ## 2. Sign in
@@ -52,28 +52,11 @@ sparkle setup
 
 `sparkle login` opens your browser for OAuth. `sparkle setup` auto-detects installed AI coding tools and wires each one with the Sparkle MCP server, hooks, and guardrail rules.
 
-## 3. Open your repository
-
-Open the repository you want Sparkle to protect. Sparkle resolves guardrails from your workspace and the repo's git remote, so make sure the repo has a remote configured:
-
-```bash
-git remote -v
-```
-
-## 4. Run a coding task
+## 3. Run a coding task
 
 Ask your agent to write or change code as you normally would. Before it plans or generates, Sparkle fetches the guardrails for that repo via the `get_guardrails` MCP tool and injects them into the agent's context.
 
-You can confirm guardrails were applied in two ways:
-
-- Watch for a `get_guardrails` MCP call before the agent starts writing code.
-- Check the **Sparkle Guardrails Applied** summary at the end of the agent's response, which lists the rules it followed.
-
-**CLI:** verify setup state at any time:
-
-```bash
-sparkle status
-```
+Once the code is generated you will see a **Sparkle Guardrails Applied** summary at the end of the agent's response, which lists the rules it followed.
 
 <Check>
   If you see the `get_guardrails` call and a guardrails summary, Sparkle is working. Every subsequent AI coding task in this repo is covered.
@@ -82,14 +65,6 @@ sparkle status
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="How guardrails work" href="/guardrails/overview" icon="shield">
-    Understand context, generation, and verification.
-  </Card>
-
-  <Card title="Repo guardrails" href="/guardrails/repo-guardrails" icon="git-branch">
-    How rules are scoped and generated per repository.
-  </Card>
-
   <Card title="Using the extension" href="/extension/usage" icon="plug">
     Sidebar, commands, and settings.
   </Card>

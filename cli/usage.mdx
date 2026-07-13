@@ -67,16 +67,12 @@ sparkle logout --ide cursor
 
 When you run `sparkle setup`, the CLI:
 
-- Connects your IDE to the Sparkle MCP server
-- Installs and wires up IDE hooks
-- Registers guardrail rules for your workspace
+- Connects your CLI & IDE to the Sparkle MCP server
+- Installs and wires up relevant hooks
+- Registers guardrail for your workspace
 - Installs the `sparkle-hooks` handler, which runs silently on prompts, MCP calls, file edits, and session events
 
 You do not need to run `sparkle-hooks` manually — setup handles it.
-
-## Shared state
-
-The CLI stores configuration and session data under `~/.sparkle/`.
 
 ## Use the extension instead
 
@@ -91,14 +87,4 @@ You can also use the [Sparkle Guardrails extension](/extension/usage) for VS Cod
 | [Windsurf](https://windsurf.com) | `windsurf` |
 | [Codex](/cli/codex) | `codex` |
 
-## Next steps
 
-<CardGroup cols={2}>
-  <Card title="Commands" icon="list" href="/cli/commands">
-    Full command reference with options.
-  </Card>
-
-  <Card title="How guardrails work" icon="shield" href="/guardrails/overview">
-    Understand context, generation, and verification.
-  </Card>
-</CardGroup>
