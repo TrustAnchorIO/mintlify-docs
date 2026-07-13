@@ -33,7 +33,11 @@ Answers to the questions teams ask most when evaluating or rolling out Sparkle. 
   </Accordion>
 
   <Accordion title="Can a developer work across multiple repos when using Sparkle?">
-    Yes. Sparkle applies guardrails at the repo level. When you change files in more than one repository — including side-by-side checkouts in the same workspace — Sparkle resolves each repo from its git remote and fetches that repo's guardrails separately. Rules from one repo are never applied to another.
+    Yes. Sparkle applies guardrails at the repo level. When you change files in more than one repository, Sparkle resolves each repo from its git remote and fetches that repo's guardrails separately. Rules from one repo are never applied to another.
+  </Accordion>
+
+  <Accordion title="Does Sparkle work in a git worktree?">
+    Yes. Sparkle identifies a repository by its git remote. When you code in a worktree, Sparkle resolves the same repo and applies the same guardrails as it would from the primary working tree.
   </Accordion>
 
   <Accordion title="Can security teams define organization-wide rules?">
